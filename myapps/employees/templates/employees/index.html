@@ -1,0 +1,46 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}
+  Employees | Home
+{% endblock %}
+
+{% block content %}
+  <table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+      <tr>
+        {% if employees %}
+          <td>Full Name</td>
+          <td>Mobile Number</td>
+          <td>Employee Code</td>
+          <td>Position</td>
+          <td>Action</td>
+        {% endif %}
+        <a href="{% url 'employees:add_employee' %}" class="btn btn-outline-info">
+          <i class="fas fa-plus mr-2"></i>
+          Add
+        </a>
+      </tr>
+    </thead>
+    <tbody>
+      {% for employee in employees %}
+        <tr>
+          <td>{{ employee.full_name }}</td>
+          <td>{{ employee.mobile_number }}</td>
+          <td>{{ employee.emp_code }}</td>
+          <td>{{ employee.position }}</td>
+          <td>
+            <a href="{% url 'employees:update_employee' emp_id=employee.id %}" class="btn text-secondary">
+              <i class="far fa-edit"></i>
+            </a>
+            <a href="{% url 'employees:delete_employee' emp_id=employee.id %}" class="btn text-danger">
+              <i class="fas fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+        {% empty %}
+        <h3 class="display-2 text-center">No Employees!</h3>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
